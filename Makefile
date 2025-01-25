@@ -35,14 +35,20 @@ AR 		:= ar
 AR_OPT 	:= rcs -o
 endif
 
+.PHONY: all
 all: static dynamic
+
+.PHONY: static 
 static: $(STATICLIB)
+
+.PHONY: dynamic 
 dynamic: $(DYNLIB)
 
 %.o: %.c
 	@echo 'Compiling $@'
 	$(CC) $(CFLAGS) $^ -c -o $@
 
+.PHONY: clean
 clean:
 	rm -rf $(LCLLIBS) $(OBJ) test/main docs
 
@@ -54,6 +60,7 @@ $(DYNLIB): $(OBJ)
 	@echo 'Creating dynamic $@'
 	$(CC) $(CFLAGS) -shared $^ -o $@
 
+.PHONY: install
 install: $(LCLLIBS)
 	mkdir -p $(INSTLIB)
 	mkdir -p $(INSTHEA)
@@ -61,11 +68,13 @@ install: $(LCLLIBS)
 	mv $(DYNLIB) $(INSTLIB)
 	cp $(PUBHEA) $(INSTHEA)
 
+.PHONY: uninstall
 uninstall:
 	rm -rf $(INSTLIB)/$(STATICLIB) \
 		$(INSTLIB)/$(DYNLIB) \
 		$(INSTHEA)
 
+.PHONY: reinstall
 reinstall:
 	sudo make uninstall
 	sudo make install
