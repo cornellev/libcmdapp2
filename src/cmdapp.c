@@ -28,7 +28,7 @@ static struct ca_app app;
 //     exit(1);
 // }
 
-void ca_hello() {
+void ca_hello(void) {
     if (printf("%s", HELLO_STRING) != sizeof(HELLO_STRING) - 1) {
         perror("ca_hello");
     }
@@ -298,7 +298,7 @@ int ca_init(int argc, const char* argv[]) {
     return 0;
 }
 
-void ca_deinit() {
+void ca_deinit(void) {
     free(app.authors);
     free(app.synopses);
     free(app.options);
@@ -760,7 +760,7 @@ int ca_parse(void* user_data) {
     return 0;
 }
 
-void ca_print_version() {
+void ca_print_version(void) {
     // print program and version number
     printf("%s %d.%d.%d\n", app.program, app.ver_major, app.ver_minor,
         app.ver_patch);
@@ -800,7 +800,7 @@ void ca_print_version() {
     printf(".\n");
 }
 
-void ca_print_help() {
+void ca_print_help(void) {
     // keep track of whether a section has been printed so extra space can be
     // added for separation
     bool previous_print = false;
